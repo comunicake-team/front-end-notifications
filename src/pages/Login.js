@@ -1,7 +1,10 @@
 import React from 'react';
 import { Typography, Button, Grid } from '@material-ui/core';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Login = () => {
+	const { loginWithRedirect } = useAuth0();
+
 	return (
 		<Grid
 			container
@@ -18,7 +21,7 @@ const Login = () => {
 			</Grid>
 			<Grid item>
 				<Button
-					onClick={() => alert('I hate you')}
+					onClick={loginWithRedirect}
 					variant="contained"
 					color="primary"
 				>
