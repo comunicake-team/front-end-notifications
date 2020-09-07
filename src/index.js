@@ -13,6 +13,7 @@ ReactDOM.render(
 			redirectUri={window.location.origin}
 			// onRedirectCallback={onRedirectCallback}
 			onRedirectCallback={() => console.log('callback ')}
+			audience={process.env.REACT_APP_AUTH0_API_ID}
 		>
 			<App />
 		</Auth0Provider>

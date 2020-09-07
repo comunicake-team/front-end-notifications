@@ -3,10 +3,11 @@ import { Button } from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
-import { sendMessage } from '../services/api';
+import useApi from '../hooks/useApi';
 
 const Profile = () => {
 	const { id } = useParams();
+	const { sendMessage } = useApi();
 	const { logout, user } = useAuth0();
 
 	return (
@@ -18,7 +19,7 @@ const Profile = () => {
 			<Button
 				variant="contained"
 				color="primary"
-				onClick={() => sendMessage(user.email)}
+				onClick={async () => sendMessage(user.email)}
 			>
 				Send Mesagge
 			</Button>
