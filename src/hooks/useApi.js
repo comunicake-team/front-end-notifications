@@ -4,21 +4,19 @@ import { useAuth0 } from '@auth0/auth0-react';
 const useApi = () => {
 	const { getAccessTokenSilently } = useAuth0();
 
-	async function sendMessage(userId) {
+	const makeRequest = async (method, endpoint) => {
 		const token = await getAccessTokenSilently();
 
-		return axios.post(
-			`${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${userId}/send-text`,
+		return axios[method](
+			`${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${endpoint}`,
 			{},
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			}
+			{ headers: { Authorization: `Bearer ${token}` } }
 		);
-	}
+	};
 
-	return { sendMessage };
+	return {
+		sendMessage: userId => makeRequest('post', `${userId}/send-message`),
+	};
 };
 
 export default useApi;
