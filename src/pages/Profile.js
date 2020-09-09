@@ -23,6 +23,7 @@ const Profile = () => {
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
 	const {
+		getUrl,
 		sendMessage,
 		createMessage,
 		getMessages,
@@ -49,7 +50,6 @@ const Profile = () => {
 								Welcome {id}
 							</Typography>
 						</Box>
-
 						<Typography variant="h6">Messages</Typography>
 						<Table
 							isLoading={loading}
@@ -75,12 +75,25 @@ const Profile = () => {
 								{
 									icon: () => <Send fontSize="small" />,
 									tooltip: 'Hit Endpoint',
-									onClick: (_, { id }) => sendMessage(id),
+									onClick: (_, { id }) =>
+										sendMessage(id).then(() =>
+											enqueueSnackbar('Message Sent')
+										),
 								},
 								{
 									icon: () => <FileCopy fontSize="small" />,
 									tooltip: 'Copy Url',
-									onClick: () => alert('url copied'),
+									onClick: (_, { id }) =>
+										window.navigator.clipboard
+											.writeText(
+												getUrl(`message/${id}/send`)
+											)
+											.then(() =>
+												enqueueSnackbar(
+													'Url Copied to Clipboard',
+													{ variant: 'success' }
+												)
+											),
 								},
 								{
 									icon: () => <Create fontSize="small" />,
@@ -113,10 +126,7 @@ const Profile = () => {
 														setLoading(false)
 													);
 												enqueueSnackbar(
-													'Message Edited!',
-													{
-														variant: 'success',
-													}
+													'Message Edited!'
 												);
 											},
 										}),
@@ -138,10 +148,7 @@ const Profile = () => {
 													)
 												);
 												enqueueSnackbar(
-													'Message Deleted',
-													{
-														variant: 'success',
-													}
+													'Message Deleted'
 												);
 											})
 											.finally(() => setLoading(false));
@@ -167,9 +174,7 @@ const Profile = () => {
 												...messages,
 											])
 										);
-										enqueueSnackbar('Message Created!', {
-											variant: 'success',
-										});
+										enqueueSnackbar('Message Created!');
 									},
 								})
 							}
@@ -192,16 +197,5 @@ const Profile = () => {
 // 	}
 // >
 // 	Log Out
-// </Button>
-// <Button
-// 	onClick={() =>
-// 		Axios.post(
-// 			'https://notifications-29c72.firebaseio.com/users.json',
-// 			{ email: 'dumitrumitaruberceanu@gmail.com' }
-// 		)
-// 	}
-// >
-// 	SEND SOME DATA
-// </Button>
 
 export default Profile;

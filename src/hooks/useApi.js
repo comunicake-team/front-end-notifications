@@ -6,11 +6,14 @@ const useApi = () => {
 	const { getAccessTokenSilently } = useAuth0();
 	const { enqueueSnackbar } = useSnackbar();
 
+	const getUrl = endpoint =>
+		`${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${endpoint}`;
+
 	const makeRequest = async (method, endpoint, body) => {
 		const token = await getAccessTokenSilently();
 
 		const config = { headers: { Authorization: `Bearer ${token}` } };
-		const url = `${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${endpoint}`;
+		const url = getUrl(endpoint);
 		const restArgs =
 			method === 'get' || method === 'delete' ? [config] : [body, config];
 
@@ -23,6 +26,7 @@ const useApi = () => {
 	};
 
 	return {
+		getUrl,
 		editMessage: (messageId, message) =>
 			makeRequest('put', `message/${messageId}`, message),
 		deleteMessage: messageId =>

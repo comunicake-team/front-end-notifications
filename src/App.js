@@ -31,7 +31,11 @@ function AuthRedirectWrapper({ children }) {
 
 function App() {
 	return (
-		<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+		<SnackbarProvider
+			maxSnack={3}
+			autoHideDuration={3000}
+			variant="success"
+		>
 			<DialogContextProvider>
 				<Router>
 					<AuthRedirectWrapper>
