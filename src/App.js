@@ -5,9 +5,11 @@ import {
 	Route,
 	useHistory,
 } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
+import { SnackbarProvider } from 'notistack';
+
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import { useAuth0 } from '@auth0/auth0-react';
 
 function AuthRedirectWrapper({ children }) {
 	const history = useHistory();
@@ -29,18 +31,20 @@ function AuthRedirectWrapper({ children }) {
 
 function App() {
 	return (
-		<Router>
-			<AuthRedirectWrapper>
-				<Switch>
-					<Route path="/:id/profile">
-						<Profile />
-					</Route>
-					<Route path="/">
-						<Login />
-					</Route>
-				</Switch>
-			</AuthRedirectWrapper>
-		</Router>
+		<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+			<Router>
+				<AuthRedirectWrapper>
+					<Switch>
+						<Route path="/:id/profile">
+							<Profile />
+						</Route>
+						<Route path="/">
+							<Login />
+						</Route>
+					</Switch>
+				</AuthRedirectWrapper>
+			</Router>
+		</SnackbarProvider>
 	);
 }
 
