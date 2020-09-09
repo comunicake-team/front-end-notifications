@@ -8,6 +8,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import { SnackbarProvider } from 'notistack';
 
+import { DialogContextProvider } from './components/GlobalDialog';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 
@@ -22,7 +23,6 @@ function AuthRedirectWrapper({ children }) {
 	if (!isAuthenticated) {
 		history.push('/');
 	} else {
-		console.log(user);
 		history.push(`/${user.email}/profile`);
 	}
 
@@ -32,18 +32,20 @@ function AuthRedirectWrapper({ children }) {
 function App() {
 	return (
 		<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-			<Router>
-				<AuthRedirectWrapper>
-					<Switch>
-						<Route path="/:id/profile">
-							<Profile />
-						</Route>
-						<Route path="/">
-							<Login />
-						</Route>
-					</Switch>
-				</AuthRedirectWrapper>
-			</Router>
+			<DialogContextProvider>
+				<Router>
+					<AuthRedirectWrapper>
+						<Switch>
+							<Route path="/:id/profile">
+								<Profile />
+							</Route>
+							<Route path="/">
+								<Login />
+							</Route>
+						</Switch>
+					</AuthRedirectWrapper>
+				</Router>
+			</DialogContextProvider>
 		</SnackbarProvider>
 	);
 }

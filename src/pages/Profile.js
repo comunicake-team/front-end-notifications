@@ -8,28 +8,35 @@ import {
 	Grid,
 	Typography,
 } from '@material-ui/core';
-import { Send, FileCopy, DeleteForever, Add } from '@material-ui/icons';
+import { Create, Send, FileCopy, DeleteForever, Add } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 
-import useApi from '../hooks/useApi';
-import Table from '../components/Table';
+import { PhoneNumber } from '../components/PhoneNumber';
+import { useDialogContext } from '../components/GlobalDialog';
 import MessageForm from '../components/MessageForm';
+import Table from '../components/Table';
+
+import useApi from '../hooks/useApi';
 
 const Profile = () => {
 	const { id } = useParams();
-	const [dialogOpen, setDialogOpen] = useState(false);
-	const [deletingMessage, setDeletingMessage] = useState(false);
-	const [loadingMessages, setLoadingMessages] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
-	const { sendMessage, createMessage, getMessages, deleteMessage } = useApi();
+	const {
+		sendMessage,
+		createMessage,
+		getMessages,
+		deleteMessage,
+		editMessage,
+	} = useApi();
 	const { enqueueSnackbar } = useSnackbar();
+	const { showDialog } = useDialogContext();
 
 	useEffect(() => {
-		setLoadingMessages(true);
-		getMessages().then(data => {
-			setMessages(data);
-			setLoadingMessages(false);
-		});
+		setLoading(true);
+		getMessages()
+			.then(setMessages)
+			.finally(() => setLoading(false));
 	}, []);
 
 	return (
@@ -45,11 +52,14 @@ const Profile = () => {
 
 						<Typography variant="h6">Messages</Typography>
 						<Table
-							isLoading={loadingMessages || deletingMessage}
+							isLoading={loading}
 							columns={[
 								{
 									title: 'Phone Number',
 									field: 'phoneNumber',
+									render: ({ phoneNumber }) => (
+										<PhoneNumber value={phoneNumber} />
+									),
 								},
 								{
 									title: 'ID',
@@ -63,32 +73,78 @@ const Profile = () => {
 							data={messages}
 							actions={[
 								{
-									icon: Send,
+									icon: () => <Send fontSize="small" />,
 									tooltip: 'Hit Endpoint',
 									onClick: (_, { id }) => sendMessage(id),
 								},
 								{
-									icon: FileCopy,
+									icon: () => <FileCopy fontSize="small" />,
 									tooltip: 'Copy Url',
 									onClick: () => alert('url copied'),
 								},
 								{
-									icon: DeleteForever,
+									icon: () => <Create fontSize="small" />,
+									tooltip: 'Edit',
+									onClick: (
+										_,
+										{ id, phoneNumber, defaultText }
+									) =>
+										showDialog(MessageForm, {
+											title: 'Edit Message',
+											initialValues: {
+												phoneNumber,
+												defaultText,
+											},
+											onSubmit: async message => {
+												setLoading(true);
+												await editMessage(id, message)
+													.then(editedMessage => {
+														setMessages(messages =>
+															messages.map(
+																message =>
+																	message.id ===
+																	editedMessage.id
+																		? editedMessage
+																		: message
+															)
+														);
+													})
+													.finally(() =>
+														setLoading(false)
+													);
+												enqueueSnackbar(
+													'Message Edited!',
+													{
+														variant: 'success',
+													}
+												);
+											},
+										}),
+								},
+								{
+									icon: () => (
+										<DeleteForever fontSize="small" />
+									),
 									tooltip: 'Delete',
 									onClick: (_, { id }) => {
-										setDeletingMessage(true);
+										setLoading(true);
 
-										deleteMessage(id).then(() => {
-											setMessages(messages =>
-												messages.filter(
-													message => message.id !== id
-												)
-											);
-											setDeletingMessage(false);
-											enqueueSnackbar('Message Deleted', {
-												variant: 'success',
-											});
-										});
+										deleteMessage(id)
+											.then(() => {
+												setMessages(messages =>
+													messages.filter(
+														message =>
+															message.id !== id
+													)
+												);
+												enqueueSnackbar(
+													'Message Deleted',
+													{
+														variant: 'success',
+													}
+												);
+											})
+											.finally(() => setLoading(false));
 									},
 								},
 							]}
@@ -99,23 +155,30 @@ const Profile = () => {
 							display="block"
 							variant="contained"
 							color="primary"
-							onClick={() => setDialogOpen(true)}
+							onClick={() =>
+								showDialog(MessageForm, {
+									title: 'Create New Message',
+									onSubmit: async message => {
+										await createMessage(
+											message
+										).then(message =>
+											setMessages(messages => [
+												message,
+												...messages,
+											])
+										);
+										enqueueSnackbar('Message Created!', {
+											variant: 'success',
+										});
+									},
+								})
+							}
 						>
 							Add New Message
 						</Button>
 					</Grid>
 				</CardContent>
 			</Card>
-			<MessageForm
-				open={dialogOpen}
-				onClose={() => setDialogOpen(false)}
-				onSubmit={async message => {
-					await createMessage(message).then(message =>
-						setMessages(messsages => [message, ...messages])
-					);
-					enqueueSnackbar('Message Created!', { variant: 'success' });
-				}}
-			/>
 		</Box>
 	);
 };
