@@ -9,12 +9,15 @@ const useApi = () => {
 
 		const config = { headers: { Authorization: `Bearer ${token}` } };
 		const url = `${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${endpoint}`;
-		const restArgs = method === 'get' ? [config] : [body, config];
+		const restArgs =
+			method === 'get' || method === 'delete' ? [config] : [body, config];
 
 		return axios[method](url, ...restArgs).then(response => response.data);
 	};
 
 	return {
+		deleteMessage: messageId =>
+			makeRequest('delete', `message/${messageId}`),
 		getMessages: () => makeRequest('get', 'message'),
 		createMessage: message => makeRequest('post', 'message', message),
 		sendMessage: messageId =>

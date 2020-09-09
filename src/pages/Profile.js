@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
 	Box,
@@ -12,21 +12,25 @@ import { Send, FileCopy, DeleteForever, Add } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 
 import useApi from '../hooks/useApi';
-import useRequest from '../hooks/useRequest';
 import Table from '../components/Table';
 import MessageForm from '../components/MessageForm';
 
 const Profile = () => {
 	const { id } = useParams();
 	const [dialogOpen, setDialogOpen] = useState(false);
-	const { sendMessage, createMessage, getMessages } = useApi();
+	const [deletingMessage, setDeletingMessage] = useState(false);
+	const [loadingMessages, setLoadingMessages] = useState(false);
+	const [messages, setMessages] = useState([]);
+	const { sendMessage, createMessage, getMessages, deleteMessage } = useApi();
 	const { enqueueSnackbar } = useSnackbar();
 
-	const { data: messages = [], loading, refetch } = useRequest(getMessages);
-
-	if (loading) {
-		return 'Loading...';
-	}
+	useEffect(() => {
+		setLoadingMessages(true);
+		getMessages().then(data => {
+			setMessages(data);
+			setLoadingMessages(false);
+		});
+	}, []);
 
 	return (
 		<Box margin="auto" marginTop={8} width="75%">
@@ -41,6 +45,7 @@ const Profile = () => {
 
 						<Typography variant="h6">Messages</Typography>
 						<Table
+							isLoading={loadingMessages || deletingMessage}
 							columns={[
 								{
 									title: 'Phone Number',
@@ -70,7 +75,21 @@ const Profile = () => {
 								{
 									icon: DeleteForever,
 									tooltip: 'Delete',
-									onClick: () => alert('deleted'),
+									onClick: (_, { id }) => {
+										setDeletingMessage(true);
+
+										deleteMessage(id).then(() => {
+											setMessages(messages =>
+												messages.filter(
+													message => message.id !== id
+												)
+											);
+											setDeletingMessage(false);
+											enqueueSnackbar('Message Deleted', {
+												variant: 'success',
+											});
+										});
+									},
 								},
 							]}
 						/>
@@ -91,7 +110,9 @@ const Profile = () => {
 				open={dialogOpen}
 				onClose={() => setDialogOpen(false)}
 				onSubmit={async message => {
-					await createMessage(message).then(refetch);
+					await createMessage(message).then(message =>
+						setMessages(messsages => [message, ...messages])
+					);
 					enqueueSnackbar('Message Created!', { variant: 'success' });
 				}}
 			/>
