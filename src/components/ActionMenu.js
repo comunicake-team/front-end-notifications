@@ -4,7 +4,6 @@ import {
 	DeleteForever,
 	FileCopy,
 	MoreVert,
-	Send,
 	Fingerprint,
 } from '@material-ui/icons';
 import {
@@ -38,13 +37,7 @@ const ActionMenu = ({
 	onDeleted,
 }) => {
 	const [loading, setLoading] = useState(false);
-	const {
-		changePublicId,
-		deleteMessage,
-		editMessage,
-		getUrl,
-		sendMessage,
-	} = useApi();
+	const { changePublicId, deleteMessage, editMessage, getUrl } = useApi();
 	const { enqueueSnackbar } = useSnackbar();
 	const { showDialog } = useDialogContext();
 	const classes = useStyles();
@@ -79,21 +72,13 @@ const ActionMenu = ({
 			<Menu open={open} onClose={closeMenu} anchorEl={anchorEl}>
 				{[
 					{
-						icon: <Send />,
-						label: 'Hit Endpoint',
-						onClick: decorateRequest(
-							() => sendMessage(publicId),
-							'Messsage Sent!'
-						),
-					},
-					{
 						icon: <FileCopy />,
 						label: 'Copy URL',
 						onClick: () => {
 							window.navigator.clipboard
 								.writeText(getUrl(`message/${id}/send`))
 								.then(() =>
-									enqueueSnackbar('Url Copied to Clipboard')
+									enqueueSnackbar('URL Copied to Clipboard!')
 								);
 						},
 					},

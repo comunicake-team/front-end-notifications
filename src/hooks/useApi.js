@@ -34,7 +34,7 @@ const useApi = () => {
 		getMessages: () => makeRequest('get', 'message'),
 		createMessage: message => makeRequest('post', 'message', message),
 		sendMessage: messageId =>
-			makeRequest('post', `message/${messageId}/send`),
+			makeRequest('get', `message/${messageId}/send`),
 		changePublicId: messageId =>
 			makeRequest('put', `message/${messageId}/change-publicId`),
 	};

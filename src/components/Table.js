@@ -20,6 +20,7 @@ import {
 	Send,
 	ViewColumn,
 } from '@material-ui/icons';
+import { grey } from '@material-ui/core/colors';
 
 // This is needed to get the proper icons to show https://github.com/mbrn/material-table/issues/51#issuecomment-508384214
 // prettier-ignore
@@ -46,7 +47,7 @@ const tableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const Table = ({ options = {}, ...props }) => {
+const Table = ({ ...props }) => {
 	return (
 		<MaterialTable
 			icons={tableIcons}
@@ -54,15 +55,22 @@ const Table = ({ options = {}, ...props }) => {
 				showTitle: false,
 				debounceInterval: 300,
 				emptyRowsWhenPaging: false,
-				actionsColumnIndex: -1,
 				draggable: false,
 				thirdSortClick: false,
-				headerStyle: {
-					position: 'static',
-				},
 				pageSize: 10,
 				pageSizeOptions: [10, 25, 50],
-				...options,
+				headerStyle: {
+					color: grey[500],
+					fontSize: 12,
+					fontWeight: 'bold',
+					letterSpacing: 1,
+					paddingBottom: 0,
+					textTransform: 'uppercase',
+					whiteSpace: 'nowrap',
+				},
+			}}
+			components={{
+				Container: props => <div {...props} />,
 			}}
 			{...props}
 		/>

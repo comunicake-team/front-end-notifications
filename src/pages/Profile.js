@@ -23,7 +23,7 @@ const Profile = () => {
 	const { id } = useParams();
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
-	const { createMessage, getMessages } = useApi();
+	const { getUrl, createMessage, getMessages } = useApi();
 	const { enqueueSnackbar } = useSnackbar();
 	const { showDialog } = useDialogContext();
 
@@ -89,6 +89,21 @@ const Profile = () => {
 							{
 								title: 'ID',
 								field: 'publicId',
+								render: ({ publicId }) => (
+									<Typography
+										component={props => (
+											<a
+												href={getUrl(
+													`message/${publicId}/send`
+												)}
+												target="_blank"
+												{...props}
+											/>
+										)}
+									>
+										{publicId}
+									</Typography>
+								),
 							},
 							{
 								title: 'Default Text',
@@ -97,6 +112,7 @@ const Profile = () => {
 							{
 								title: 'Actions',
 								sorting: false,
+								align: 'center',
 								render: message => (
 									<ActionMenu
 										message={message}
