@@ -10,7 +10,7 @@ import { MuiThemeProvider } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 
 import { DialogContextProvider } from './components/GlobalDialog';
-import Login from './pages/Login';
+import LandingPage from './pages/LandingPage';
 import Profile from './pages/Profile';
 
 import theme from './theme';
@@ -48,7 +48,7 @@ function App() {
 									<Profile />
 								</Route>
 								<Route path="/">
-									<Login />
+									<LandingPage />
 								</Route>
 							</Switch>
 						</AuthRedirectWrapper>

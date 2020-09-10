@@ -14,8 +14,9 @@ import { useSnackbar } from 'notistack';
 
 import { PhoneNumber } from '../components/PhoneNumber';
 import { useDialogContext } from '../components/GlobalDialog';
-import MessageForm from '../components/MessageForm';
 import ActionMenu from '../components/ActionMenu';
+import MessageForm from '../components/MessageForm';
+import Page from '../components/Page';
 import Table from '../components/Table';
 
 import useApi from '../hooks/useApi';
@@ -36,7 +37,7 @@ const Profile = () => {
 	}, []);
 
 	return (
-		<Box margin="auto" marginTop={8} width="75%">
+		<Page>
 			<Card>
 				<CardContent>
 					<Box margin={8}>
@@ -148,18 +149,8 @@ const Profile = () => {
 					)}
 				</CardContent>
 			</Card>
-		</Box>
+		</Page>
 	);
 };
-
-// const { logout, user } = useAuth0();
-// <Button
-// 	variant="contained"
-// 	color="primary"
-// 	onClick={() =>
-// 		logout({ returnTo: window.location.origin })
-// 	}
-// >
-// 	Log Out
 
 export default Profile;
