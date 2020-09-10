@@ -3,7 +3,6 @@ import MaterialTable from 'material-table';
 import {
 	AddBox,
 	ArrowDownward,
-	ArrowUpward,
 	Check,
 	ChevronLeft,
 	ChevronRight,

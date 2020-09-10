@@ -6,11 +6,14 @@ import {
 	useHistory,
 } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { MuiThemeProvider } from '@material-ui/core';
 import { SnackbarProvider } from 'notistack';
 
 import { DialogContextProvider } from './components/GlobalDialog';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+
+import theme from './theme';
 
 function AuthRedirectWrapper({ children }) {
 	const history = useHistory();
@@ -23,7 +26,7 @@ function AuthRedirectWrapper({ children }) {
 	if (!isAuthenticated) {
 		history.push('/');
 	} else {
-		history.push(`/${user.email}/profile`);
+		history.push(`/profile/${user.email}`);
 	}
 
 	return children;
@@ -36,20 +39,22 @@ function App() {
 			autoHideDuration={3000}
 			variant="success"
 		>
-			<DialogContextProvider>
-				<Router>
-					<AuthRedirectWrapper>
-						<Switch>
-							<Route path="/:id/profile">
-								<Profile />
-							</Route>
-							<Route path="/">
-								<Login />
-							</Route>
-						</Switch>
-					</AuthRedirectWrapper>
-				</Router>
-			</DialogContextProvider>
+			<MuiThemeProvider theme={theme}>
+				<DialogContextProvider>
+					<Router>
+						<AuthRedirectWrapper>
+							<Switch>
+								<Route path="/profile/:id">
+									<Profile />
+								</Route>
+								<Route path="/">
+									<Login />
+								</Route>
+							</Switch>
+						</AuthRedirectWrapper>
+					</Router>
+				</DialogContextProvider>
+			</MuiThemeProvider>
 		</SnackbarProvider>
 	);
 }

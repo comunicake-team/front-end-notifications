@@ -17,7 +17,7 @@ import PrimaryButton from './PrimaryButton';
 const validationSchema = yup.object().shape({
 	defaultText: yup
 		.string()
-		.max(250)
+		.max(250, 'Default text must be at most 250 characters')
 		.required('Please enter the default text'),
 	phoneNumber: yup
 		.string()
