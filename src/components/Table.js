@@ -52,7 +52,6 @@ const Table = ({ ...props }) => {
 		<MaterialTable
 			icons={tableIcons}
 			options={{
-				showTitle: false,
 				debounceInterval: 300,
 				emptyRowsWhenPaging: false,
 				draggable: false,

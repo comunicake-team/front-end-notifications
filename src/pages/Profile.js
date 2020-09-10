@@ -8,6 +8,7 @@ import {
 	Grid,
 	Typography,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { Add } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
 
@@ -44,12 +45,7 @@ const Profile = () => {
 						</Typography>
 					</Box>
 					<Box m={1}>
-						<Grid
-							container
-							justify="space-between"
-							alignItems="center"
-						>
-							<Typography variant="h6">Messages</Typography>
+						<Grid container justify="flex-end" alignItems="center">
 							<Button
 								startIcon={<Add />}
 								display="block"
@@ -76,71 +72,80 @@ const Profile = () => {
 							</Button>
 						</Grid>
 					</Box>
-					<Table
-						isLoading={loading}
-						columns={[
-							{
-								title: 'Phone Number',
-								field: 'phoneNumber',
-								render: ({ phoneNumber }) => (
-									<PhoneNumber value={phoneNumber} />
-								),
-							},
-							{
-								title: 'ID',
-								field: 'publicId',
-								render: ({ publicId }) => (
-									<Typography
-										component={props => (
-											<a
-												href={getUrl(
-													`message/${publicId}/send`
-												)}
-												target="_blank"
-												{...props}
-											/>
-										)}
-									>
-										{publicId}
-									</Typography>
-								),
-							},
-							{
-								title: 'Default Text',
-								field: 'defaultText',
-							},
-							{
-								title: 'Actions',
-								sorting: false,
-								align: 'center',
-								render: message => (
-									<ActionMenu
-										message={message}
-										onEdited={editedMessage =>
-											setMessages(messages =>
-												messages.map(message =>
-													message.id ===
-													editedMessage.id
-														? editedMessage
-														: message
+					{!loading && messages.length === 0 ? (
+						<Alert severity="info">
+							You have no messages. Please create a message to get
+							started.
+						</Alert>
+					) : (
+						<Table
+							title="Messages"
+							isLoading={loading}
+							columns={[
+								{
+									title: 'Phone Number',
+									field: 'phoneNumber',
+									render: ({ phoneNumber }) => (
+										<PhoneNumber value={phoneNumber} />
+									),
+								},
+								{
+									title: 'ID',
+									field: 'publicId',
+									render: ({ publicId }) => (
+										<Typography
+											component={props => (
+												<a
+													href={getUrl(
+														`message/${publicId}/send`
+													)}
+													target="_blank"
+													rel="noopener noreferrer"
+													{...props}
+												/>
+											)}
+										>
+											{publicId}
+										</Typography>
+									),
+								},
+								{
+									title: 'Default Text',
+									field: 'defaultText',
+								},
+								{
+									title: 'Actions',
+									sorting: false,
+									align: 'center',
+									render: message => (
+										<ActionMenu
+											message={message}
+											onEdited={editedMessage =>
+												setMessages(messages =>
+													messages.map(message =>
+														message.id ===
+														editedMessage.id
+															? editedMessage
+															: message
+													)
 												)
-											)
-										}
-										onDeleted={deletedMessage =>
-											setMessages(messages =>
-												messages.filter(
-													message =>
-														message.id !==
-														deletedMessage.id
+											}
+											onDeleted={deletedMessage =>
+												setMessages(messages =>
+													messages.filter(
+														message =>
+															message.id !==
+															deletedMessage.id
+													)
 												)
-											)
-										}
-									/>
-								),
-							},
-						]}
-						data={messages}
-					/>
+											}
+										/>
+									),
+								},
+							]}
+							data={messages}
+						/>
+					)}
 				</CardContent>
 			</Card>
 		</Box>
