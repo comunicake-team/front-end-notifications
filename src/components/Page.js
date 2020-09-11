@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-	AppBar,
-	Box,
-	Button,
-	Grid,
-	Toolbar,
-	Typography,
-} from '@material-ui/core';
-import { blue } from '@material-ui/core/colors';
+import { Box, Grid, Typography } from '@material-ui/core';
+import { blueGrey } from '@material-ui/core/colors';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import SupportEmail from './SupportEmail';
+import PrimaryButton from './PrimaryButton';
 
 const Page = ({ children }) => {
 	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -24,33 +18,23 @@ const Page = ({ children }) => {
 			style={{ minHeight: '100vh' }}
 		>
 			<div>
-				<AppBar>
-					<Toolbar>
-						<Grid container justify="flex-end">
-							{isAuthenticated ? (
-								<Button
-									color="inherit"
-									onClick={() =>
-										logout({
-											returnTo: window.location.origin,
-										})
-									}
-								>
-									Logout
-								</Button>
-							) : (
-								<Button
-									color="inherit"
-									onClick={loginWithRedirect}
-								>
-									Login
-								</Button>
-							)}
-						</Grid>
-					</Toolbar>
-				</AppBar>
-				<Toolbar />{' '}
-				{/* This is needed to render the children properly */}
+				<Grid container justify="flex-end" style={{ padding: 16 }}>
+					{isAuthenticated ? (
+						<PrimaryButton
+							onClick={() =>
+								logout({
+									returnTo: window.location.origin,
+								})
+							}
+						>
+							Logout
+						</PrimaryButton>
+					) : (
+						<PrimaryButton onClick={loginWithRedirect}>
+							Login
+						</PrimaryButton>
+					)}
+				</Grid>
 				<Box
 					width="75%"
 					marginTop={4}
@@ -63,14 +47,15 @@ const Page = ({ children }) => {
 			<footer
 				style={{
 					alignItems: 'center',
-					backgroundColor: blue[300],
+					backgroundColor: blueGrey[500],
+					boxSizing: 'border-box',
+					color: 'white',
 					display: 'flex',
 					height: 50,
 					justifyContent: 'space-around',
 					marginTop: 64,
 					padding: 16,
 					width: '100%',
-					color: 'white',
 				}}
 			>
 				<Typography>

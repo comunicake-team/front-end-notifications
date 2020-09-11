@@ -48,7 +48,7 @@ const Profile = () => {
 		<Page>
 			<Card>
 				<CardContent>
-					<Box margin={8}>
+					<Box margin={8} marginTop={2}>
 						<Typography variant="h4" align="center" gutterBottom>
 							Welcome {user.email}
 						</Typography>
@@ -65,7 +65,11 @@ const Profile = () => {
 						</Alert>
 					</Box>
 					<Box m={1}>
-						<Grid container justify="flex-end" alignItems="center">
+						<Grid
+							container
+							justify="flex-start"
+							alignItems="center"
+						>
 							<Button
 								startIcon={<Add />}
 								display="block"
@@ -73,7 +77,7 @@ const Profile = () => {
 								color="primary"
 								onClick={() =>
 									showDialog(MessageForm, {
-										title: 'Create New Message',
+										title: 'Create A New Message',
 										onSubmit: async message => {
 											await createMessage(
 												message
@@ -99,7 +103,6 @@ const Profile = () => {
 						</Alert>
 					) : (
 						<Table
-							title="Messages"
 							columns={[
 								{
 									title: 'Phone Number',
