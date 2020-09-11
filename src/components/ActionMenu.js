@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ActionMenu = ({
-	message: { id, publicId, phoneNumber, defaultText },
+	message: { id, phoneNumber, defaultText },
 	onEdited,
 	onDeleted,
 }) => {

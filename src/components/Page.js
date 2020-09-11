@@ -77,7 +77,7 @@ const Page = ({ children }) => {
 					Support: <SupportEmail style={{ color: 'white' }} />
 				</Typography>
 				<Typography>
-					Made with <span rol="img">❤️</span> &nbsp;in PDX
+					Made with <span role="img">❤️</span> &nbsp;in PDX
 				</Typography>
 			</footer>
 		</Grid>

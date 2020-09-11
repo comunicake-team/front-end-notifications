@@ -5,13 +5,13 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	Grid,
 } from '@material-ui/core';
 import * as yup from 'yup';
 
 import { LinkedPhoneNumberInput } from './PhoneNumber';
 import { LinkedTextInput } from './TextInput';
 import Dialog from './Dialog';
-import GridContainer from './GridContainer';
 import PrimaryButton from './PrimaryButton';
 
 const validationSchema = yup.object().shape({
@@ -49,10 +49,14 @@ const MessageForm = ({ open, onClose, title, initialValues, onSubmit }) => {
 					<Form>
 						<DialogTitle>{title}</DialogTitle>
 						<DialogContent>
-							<GridContainer columns={1}>
-								<LinkedPhoneNumberInput name="phoneNumber" />
-								<LinkedTextInput name="defaultText" />
-							</GridContainer>
+							<Grid container direction="column" spacing={4}>
+								<Grid item>
+									<LinkedPhoneNumberInput name="phoneNumber" />
+								</Grid>
+								<Grid item>
+									<LinkedTextInput name="defaultText" />
+								</Grid>
+							</Grid>
 						</DialogContent>
 						<DialogActions>
 							<PrimaryButton

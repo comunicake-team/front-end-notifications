@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSnackbar } from 'notistack';
-import { makeRe } from 'picomatch';
 
 const useApi = () => {
 	const { getAccessTokenSilently } = useAuth0();
