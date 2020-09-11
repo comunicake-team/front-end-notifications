@@ -30,8 +30,8 @@ const MessageForm = ({ open, onClose, title, initialValues, onSubmit }) => {
 		<Dialog open={open} onClose={onClose}>
 			<Formik
 				initialValues={{
-					defaultText: 'text message',
-					phoneNumber: '9712308028',
+					defaultText: 'All Done!',
+					phoneNumber: '',
 					...initialValues,
 				}}
 				validationSchema={validationSchema}

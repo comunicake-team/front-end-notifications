@@ -6,7 +6,12 @@ import Page from '../components/Page';
 const LandingPage = () => {
 	return (
 		<Page>
-			<Typography variant="h2">Landing Page</Typography>
+			<Typography variant="h3" gutterBottom>
+				Welcome to My FUcking App
+			</Typography>
+			<Typography>
+				This is the description of the service we offer
+			</Typography>
 		</Page>
 	);
 };
