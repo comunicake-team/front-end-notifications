@@ -11,6 +11,7 @@ import { SnackbarProvider } from 'notistack';
 
 import { DialogContextProvider } from './components/GlobalDialog';
 import LandingPage from './pages/LandingPage';
+import LoadingPage from './components/LoadingPage';
 import Profile from './pages/Profile';
 
 import theme from './theme';
@@ -20,7 +21,7 @@ function AuthRedirectWrapper({ children }) {
 	const { user, isAuthenticated, isLoading } = useAuth0();
 
 	if (isLoading) {
-		return 'Loading...';
+		return <LoadingPage />;
 	}
 
 	if (!isAuthenticated) {
@@ -44,7 +45,7 @@ function App() {
 					<Router>
 						<AuthRedirectWrapper>
 							<Switch>
-								<Route path="/profile/:id">
+								<Route path="/profile/:email">
 									<Profile />
 								</Route>
 								<Route path="/">

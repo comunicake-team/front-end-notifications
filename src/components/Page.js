@@ -10,6 +10,8 @@ import {
 import { blue } from '@material-ui/core/colors';
 import { useAuth0 } from '@auth0/auth0-react';
 
+import SupportEmail from './SupportEmail';
+
 const Page = ({ children }) => {
 	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
@@ -72,16 +74,10 @@ const Page = ({ children }) => {
 				}}
 			>
 				<Typography>
-					Support:{' '}
-					<a
-						href="mailto:GoFuck@yourself.com"
-						style={{ color: 'white' }}
-					>
-						GoFuck@yourself.com
-					</a>
+					Support: <SupportEmail style={{ color: 'white' }} />
 				</Typography>
 				<Typography>
-					Made with <span rol="img">❤️</span> &nbsp; in PDX
+					Made with <span rol="img">❤️</span> &nbsp;in PDX
 				</Typography>
 			</footer>
 		</Grid>

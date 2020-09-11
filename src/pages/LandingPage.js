@@ -10,7 +10,11 @@ const LandingPage = () => {
 				Welcome to My FUcking App
 			</Typography>
 			<Typography>
-				This is the description of the service we offer
+				This is the description of the service we offer Lorem ipsum
+				dolor sit amet consectetur adipisicing elit. Molestias nihil
+				corporis odio vero a fugiat accusantium aspernatur nisi quasi,
+				iste quae magni tempora voluptas est autem doloribus, enim
+				dolorum ratione?
 			</Typography>
 		</Page>
 	);

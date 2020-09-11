@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSnackbar } from 'notistack';
+import { makeRe } from 'picomatch';
 
 const useApi = () => {
 	const { getAccessTokenSilently } = useAuth0();
@@ -25,18 +26,16 @@ const useApi = () => {
 			});
 	};
 
+	// prettier-ignore
 	return {
-		getUrl,
-		editMessage: (messageId, message) =>
-			makeRequest('put', `message/${messageId}`, message),
-		deleteMessage: messageId =>
-			makeRequest('delete', `message/${messageId}`),
-		getMessages: () => makeRequest('get', 'message'),
+		changePublicId: messageId => makeRequest('put', `message/${messageId}/change-publicId`),
 		createMessage: message => makeRequest('post', 'message', message),
-		sendMessage: messageId =>
-			makeRequest('get', `message/${messageId}/send`),
-		changePublicId: messageId =>
-			makeRequest('put', `message/${messageId}/change-publicId`),
+		deleteMessage: messageId => makeRequest('delete', `message/${messageId}`),
+		editMessage: (messageId, message) => makeRequest('put', `message/${messageId}`, message),
+		getMessages: () => makeRequest('get', 'message'),
+		getUrl,
+		getUser: () => makeRequest('get', 'user'),
+		sendMessage: messageId => makeRequest('get', `message/${messageId}/send`),
 	};
 };
 

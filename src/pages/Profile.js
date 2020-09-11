@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import {
 	Box,
 	Button,
@@ -15,35 +14,55 @@ import { useSnackbar } from 'notistack';
 import { PhoneNumber } from '../components/PhoneNumber';
 import { useDialogContext } from '../components/GlobalDialog';
 import ActionMenu from '../components/ActionMenu';
+import LoadingPage from '../components/LoadingPage';
 import MessageForm from '../components/MessageForm';
 import Page from '../components/Page';
+import SupportEmail from '../components/SupportEmail';
 import Table from '../components/Table';
 
 import useApi from '../hooks/useApi';
 
 const Profile = () => {
-	const { id } = useParams();
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState([]);
-	const { getUrl, createMessage, getMessages } = useApi();
+	const [user, setUser] = useState({});
+	const { getUrl, createMessage, getMessages, getUser } = useApi();
 	const { enqueueSnackbar } = useSnackbar();
 	const { showDialog } = useDialogContext();
 
 	useEffect(() => {
 		setLoading(true);
-		getMessages()
-			.then(setMessages)
+		Promise.all([getMessages(), getUser()])
+			.then(([messages, user]) => {
+				setMessages(messages);
+				setUser(user);
+			})
 			.finally(() => setLoading(false));
 	}, []);
+
+	if (loading) {
+		return <LoadingPage />;
+	}
 
 	return (
 		<Page>
 			<Card>
 				<CardContent>
 					<Box margin={8}>
-						<Typography variant="h4" align="center">
-							Welcome {id}
+						<Typography variant="h4" align="center" gutterBottom>
+							Welcome {user.email}
 						</Typography>
+						<Alert
+							severity={
+								user.messagesRemaining <= 10
+									? 'warning'
+									: 'info'
+							}
+						>
+							You have {user.messagesRemaining} messages left to
+							send. If you'd like more, please contact us at{' '}
+							<SupportEmail />.
+						</Alert>
 					</Box>
 					<Box m={1}>
 						<Grid container justify="flex-end" alignItems="center">
@@ -73,7 +92,7 @@ const Profile = () => {
 							</Button>
 						</Grid>
 					</Box>
-					{!loading && messages.length === 0 ? (
+					{messages.length === 0 ? (
 						<Alert severity="info">
 							You have no messages. Please create a message to get
 							started.
@@ -81,7 +100,6 @@ const Profile = () => {
 					) : (
 						<Table
 							title="Messages"
-							isLoading={loading}
 							columns={[
 								{
 									title: 'Phone Number',
