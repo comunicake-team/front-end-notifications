@@ -10,7 +10,11 @@ const useApi = () => {
 		`${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_DOMAIN}/${endpoint}`;
 
 	const makeRequest = async (method, endpoint, body) => {
-		const token = await getAccessTokenSilently();
+		const token = await getAccessTokenSilently().catch(err => {
+			console.error(err);
+			enqueueSnackbar(err.message, { variant: 'error' });
+			throw err;
+		});
 
 		const config = { headers: { Authorization: `Bearer ${token}` } };
 		const url = getUrl(endpoint);
@@ -19,9 +23,10 @@ const useApi = () => {
 
 		return axios[method](url, ...restArgs)
 			.then(response => response.data)
-			.catch(() => {
-				enqueueSnackbar('Server Error', { variant: 'error' });
-				throw new Error('Server Error');
+			.catch(err => {
+				console.error(err);
+				enqueueSnackbar(err.message, { variant: 'error' });
+				throw err;
 			});
 	};
 

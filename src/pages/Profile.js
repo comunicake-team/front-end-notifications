@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Box,
-	Button,
-	Card,
-	CardContent,
-	Grid,
-	Typography,
-} from '@material-ui/core';
+import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Add } from '@material-ui/icons';
 import { useSnackbar } from 'notistack';
@@ -17,6 +10,7 @@ import ActionMenu from '../components/ActionMenu';
 import LoadingPage from '../components/LoadingPage';
 import MessageForm from '../components/MessageForm';
 import Page from '../components/Page';
+import PrimaryButton from '../components/PrimaryButton';
 import SupportEmail from '../components/SupportEmail';
 import Table from '../components/Table';
 
@@ -70,11 +64,9 @@ const Profile = () => {
 							justify="flex-start"
 							alignItems="center"
 						>
-							<Button
+							<PrimaryButton
 								startIcon={<Add />}
 								display="block"
-								variant="contained"
-								color="primary"
 								onClick={() =>
 									showDialog(MessageForm, {
 										title: 'Create A New Message',
@@ -93,7 +85,7 @@ const Profile = () => {
 								}
 							>
 								New Message
-							</Button>
+							</PrimaryButton>
 						</Grid>
 					</Box>
 					{messages.length === 0 ? (
