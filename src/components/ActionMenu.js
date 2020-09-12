@@ -3,8 +3,8 @@ import {
 	Create,
 	DeleteForever,
 	FileCopy,
+	Link,
 	MoreVert,
-	Fingerprint,
 } from '@material-ui/icons';
 import {
 	CircularProgress,
@@ -83,7 +83,7 @@ const ActionMenu = ({
 						},
 					},
 					{
-						icon: <Fingerprint />,
+						icon: <Link />,
 						label: 'Change URL',
 						onClick: decorateRequest(
 							() => changePublicId(id).then(onEdited),
@@ -92,7 +92,7 @@ const ActionMenu = ({
 					},
 					{
 						icon: <Create />,
-						label: 'Edit',
+						label: 'Edit Message',
 						onClick: () => {
 							showDialog(MessageForm, {
 								title: 'Edit Message',
@@ -112,7 +112,7 @@ const ActionMenu = ({
 					},
 					{
 						icon: <DeleteForever />,
-						label: 'Delete',
+						label: 'Delete Message',
 						onClick: decorateRequest(
 							() => deleteMessage(id).then(onDeleted),
 							'Message Deleted!'
