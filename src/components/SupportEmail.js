@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SupportEmail = props => {
-	const supportEmail = 'suckOnMyButt@hotmail.com';
+	const supportEmail = 'comunicake.cake@gmail.com';
 	return (
 		<a href={`mailto:${supportEmail}`} {...props}>
 			{supportEmail}
