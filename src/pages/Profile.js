@@ -103,7 +103,11 @@ const Profile = () => {
 									),
 								},
 								{
-									title: 'ID',
+									title: 'Default Text',
+									field: 'defaultText',
+								},
+								{
+									title: 'URL',
 									field: 'publicId',
 									render: ({ publicId }) => (
 										<Typography
@@ -117,14 +121,11 @@ const Profile = () => {
 													{...props}
 												/>
 											)}
+											variant="caption"
 										>
-											{publicId}
+											{getUrl(`message/${publicId}/send`)}
 										</Typography>
 									),
-								},
-								{
-									title: 'Default Text',
-									field: 'defaultText',
 								},
 								{
 									title: 'Actions',

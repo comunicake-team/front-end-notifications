@@ -104,10 +104,10 @@ const ActionMenu = ({
 					},
 					{
 						icon: <Fingerprint />,
-						label: 'Change ID',
+						label: 'Change URL',
 						onClick: decorateRequest(
 							() => changePublicId(id).then(onEdited),
-							'ID Changed!'
+							'URL Changed!'
 						),
 					},
 					{
