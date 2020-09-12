@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ActionMenu = ({
-	message: { id, phoneNumber, defaultText },
+	message: { id, publicId, phoneNumber, defaultText },
 	onEdited,
 	onDeleted,
 }) => {
@@ -76,11 +76,19 @@ const ActionMenu = ({
 						label: 'Copy URL',
 						onClick: () => {
 							window.navigator.clipboard
-								.writeText(getUrl(`message/${id}/send`))
+								.writeText(getUrl(`message/${publicId}/send`))
 								.then(() =>
 									enqueueSnackbar('URL Copied to Clipboard!')
 								);
 						},
+					},
+					{
+						icon: <Fingerprint />,
+						label: 'Change URL',
+						onClick: decorateRequest(
+							() => changePublicId(id).then(onEdited),
+							'URL Changed!'
+						),
 					},
 					{
 						icon: <Create />,
@@ -101,14 +109,6 @@ const ActionMenu = ({
 								),
 							});
 						},
-					},
-					{
-						icon: <Fingerprint />,
-						label: 'Change URL',
-						onClick: decorateRequest(
-							() => changePublicId(id).then(onEdited),
-							'URL Changed!'
-						),
 					},
 					{
 						icon: <DeleteForever />,
