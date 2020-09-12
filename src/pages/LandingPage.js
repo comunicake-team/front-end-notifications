@@ -14,7 +14,7 @@ const LandingPage = () => {
 				dolor sit amet consectetur adipisicing elit. Molestias nihil
 				corporis odio vero a fugiat accusantium aspernatur nisi quasi,
 				iste quae magni tempora voluptas est autem doloribus, enim
-				dolorum ratione?
+				dolorum ratione? SHES ALLIIIIIVE
 			</Typography>
 		</Page>
 	);
