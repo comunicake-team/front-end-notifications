@@ -90,8 +90,7 @@ const Profile = () => {
 					</Box>
 					{messages.length === 0 ? (
 						<Alert severity="info">
-							You have no messages. Please create a message to get
-							started.
+							You have not created any messages.
 						</Alert>
 					) : (
 						<Table
