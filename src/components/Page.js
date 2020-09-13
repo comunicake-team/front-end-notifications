@@ -59,7 +59,7 @@ const Page = ({ children }) => {
 					width: '100%',
 				}}
 			>
-				<Typography>
+				<Typography align="center">
 					Support & Feedback:{' '}
 					<SupportEmail style={{ color: 'white' }} />
 				</Typography>

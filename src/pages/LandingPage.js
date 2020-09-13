@@ -30,14 +30,16 @@ const LandingPage = () => {
 			</Typography>
 			<br />
 			<Grid container justify="center">
-				<img
-					src="/landing.png"
-					style={{
-						border: '1px solid black',
-						maxHeight: 500,
-						maxWidth: '100%',
-					}}
-				></img>
+				<Grid item>
+					<img
+						src="/landing.png"
+						style={{
+							border: '1px solid black',
+							maxHeight: 500,
+							maxWidth: '100%',
+						}}
+					></img>
+				</Grid>
 			</Grid>
 			<Typography style={{ marginTop: 16 }}>
 				The links can be embeded in an email, used as a webhook, or
