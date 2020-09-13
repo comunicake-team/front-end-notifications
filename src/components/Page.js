@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Grid, Typography } from '@material-ui/core';
-import { blueGrey } from '@material-ui/core/colors';
+import { pink } from '@material-ui/core/colors';
 import { useAuth0 } from '@auth0/auth0-react';
 
 import SupportEmail from './SupportEmail';
@@ -47,22 +47,24 @@ const Page = ({ children }) => {
 			<footer
 				style={{
 					alignItems: 'center',
-					backgroundColor: blueGrey[500],
+					backgroundColor: pink[500],
 					boxSizing: 'border-box',
 					color: 'white',
 					display: 'flex',
-					height: 50,
+					flexWrap: 'wrap',
 					justifyContent: 'space-around',
 					marginTop: 64,
+					minheight: 50,
 					padding: 16,
 					width: '100%',
 				}}
 			>
 				<Typography>
-					Support: <SupportEmail style={{ color: 'white' }} />
+					Support & Feedback:{' '}
+					<SupportEmail style={{ color: 'white' }} />
 				</Typography>
 				<Typography>
-					Made with <span role="img">❤️</span> &nbsp;in PDX
+					Made with <span role="img">💙</span> in PDX
 				</Typography>
 			</footer>
 		</Grid>
