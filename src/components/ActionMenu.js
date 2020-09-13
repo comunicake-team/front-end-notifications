@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
 	Create,
+	CropFree,
 	DeleteForever,
 	FileCopy,
 	Link,
@@ -81,6 +82,14 @@ const ActionMenu = ({
 									enqueueSnackbar('URL Copied to Clipboard!')
 								);
 						},
+					},
+					{
+						icon: <CropFree />,
+						label: 'View QR Code',
+						onClick: () =>
+							window.open(
+								`${window.location.origin}/message/${publicId}/qr-code`
+							),
 					},
 					{
 						icon: <Link />,

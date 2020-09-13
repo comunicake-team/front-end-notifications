@@ -16,6 +16,7 @@
     "lodash.startcase": "^4.4.0",
     "material-table": "^1.69.0",
     "notistack": "^1.0.0",
+    "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-number-format": "^4.4.1",

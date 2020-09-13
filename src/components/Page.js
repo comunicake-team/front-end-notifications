@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { Box, Grid, Typography, CircularProgress } from '@material-ui/core';
 import { pink } from '@material-ui/core/colors';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -7,7 +8,28 @@ import SupportEmail from './SupportEmail';
 import PrimaryButton from './PrimaryButton';
 
 const Page = ({ children }) => {
-	const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+	const {
+		isAuthenticated,
+		loginWithRedirect,
+		logout,
+		user,
+		isLoading,
+	} = useAuth0();
+	const history = useHistory();
+
+	if (isLoading) {
+		return (
+			<Grid container justify="center">
+				<CircularProgress />
+			</Grid>
+		);
+	}
+
+	if (!isAuthenticated) {
+		history.push('/');
+	} else {
+		history.push(`/profile/${user.email}`);
+	}
 
 	return (
 		<Grid
