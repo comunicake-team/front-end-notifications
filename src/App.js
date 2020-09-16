@@ -5,8 +5,9 @@ import { SnackbarProvider } from 'notistack';
 
 import { DialogContextProvider } from './components/GlobalDialog';
 import LandingPage from './pages/LandingPage';
-import Profile from './pages/Profile';
 import MessageQRCode from './pages/MessageQRCode';
+import Profile from './pages/Profile';
+import VerifyEmail from './pages/VerifyEmail';
 
 import theme from './theme';
 
@@ -26,6 +27,9 @@ function App() {
 							</Route>
 							<Route path="/message/:publicId/qr-code">
 								<MessageQRCode />
+							</Route>
+							<Route path="/verify-email">
+								<VerifyEmail />
 							</Route>
 							<Route path="/">
 								<LandingPage />

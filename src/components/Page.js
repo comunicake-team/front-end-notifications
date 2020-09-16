@@ -9,12 +9,14 @@ import PrimaryButton from './PrimaryButton';
 
 const Page = ({ children }) => {
 	const {
+		error,
 		isAuthenticated,
 		loginWithRedirect,
 		logout,
 		user,
 		isLoading,
 	} = useAuth0();
+
 	const history = useHistory();
 
 	if (isLoading) {
@@ -25,7 +27,12 @@ const Page = ({ children }) => {
 		);
 	}
 
-	if (!isAuthenticated) {
+	if (
+		error?.error_description ===
+		'Please verify your email before logging in.'
+	) {
+		history.push('/verify-email');
+	} else if (!isAuthenticated) {
 		history.push('/');
 	} else {
 		history.push(`/profile/${user.email}`);
