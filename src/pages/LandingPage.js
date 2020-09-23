@@ -26,26 +26,17 @@ const LandingPage = () => {
 				Once you've been authenticated, you will be redirected to your
 				profile page were you can create messages to send. Create a new
 				message with a destination phone number and default text, then
-				click the link to send the message. Piece of cake 🍰!
+				click the link to send the message. Piece of cake 🍰! The URLs
+				can be embeded in an email, used as a webhook, or accessed in
+				your program when you need to be notified of an event.
 			</Typography>
 			<br />
 			<Grid container justify="center">
-				<Grid item>
-					<img
-						src="/landing.png"
-						style={{
-							border: '1px solid black',
-							maxHeight: 500,
-							maxWidth: '100%',
-						}}
-					></img>
-				</Grid>
+				<video autoPlay loop style={{ maxWidth: '100%' }}>
+					<source src="/comunicake_tutorial.mp4" type="video/mp4" />
+					Your browser does not support the video tag.
+				</video>
 			</Grid>
-			<Typography style={{ marginTop: 16 }}>
-				The links can be embeded in an email, used as a webhook, or
-				accessed in your program when you need to be notified of an
-				event.
-			</Typography>
 		</Page>
 	);
 };
