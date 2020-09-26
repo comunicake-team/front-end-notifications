@@ -30,7 +30,7 @@ const MessageForm = ({ open, onClose, title, initialValues, onSubmit }) => {
 		<Dialog open={open} onClose={onClose}>
 			<Formik
 				initialValues={{
-					defaultText: `You're link has been hit! Time for some 🎂!`,
+					defaultText: `Your URL has been hit! Time for some 🎂!`,
 					phoneNumber: '',
 					...initialValues,
 				}}
