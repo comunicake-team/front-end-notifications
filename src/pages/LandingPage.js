@@ -32,7 +32,7 @@ const LandingPage = () => {
 			</Typography>
 			<br />
 			<Grid container justify="center">
-				<video autoPlay loop style={{ maxWidth: '100%' }}>
+				<video controls loop style={{ maxWidth: '100%' }}>
 					<source src="/comunicake_tutorial.mp4" type="video/mp4" />
 					Your browser does not support the video tag.
 				</video>
